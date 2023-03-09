@@ -1,52 +1,57 @@
-const notes = require('express').Router();
-const { v4: uuidv4 } = require('uuid');
-const app = require('.');
+const notesRoute = require('express').Router();
+// const fs = require('fs');
+const path = require('path');
+// const { v4: uuidv4 } = require('uuid');
+// const app = require('.');
 const {
   readFromFile,
   readAndAppend,
   writeToFile,
-} = require('../helpers/fsUtils');
+  deleteFromFile,
+  uuid,
+} = require('../helpers/utils');
 
 // GET Route for retrieving all the notes 
-notes.get('/', (req, res) => {
-  readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)));
+notesRoute.get('/', (req, res) => {
+  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 // DELETE Route for a specific tip
-notes.delete('/api/notes/${id}', (req, res) => {
-  const noteId = req.params.note_id;
-  readFromFile('./db/notes.json')
-    .then((data) => JSON.parse(data))
-    .then((json) => {
-      // Make a new array of all notes except the one with the ID provided in the URL
-      const result = json.filter((note) => note.tip_id !== noteId);
+// notesRoute.delete('/:id', (req, res) => {
+//   const noteId = req.params.id;
 
-      // Save that array to the filesystem
-      writeToFile('./db/notes.json', result);
+//   fs.read('./db/db.json')
+//     .then((data) => JSON.parse(data))
+//     .then((json) => {
+//       // Make a new array of all notes except the one with the ID provided in the URL
+//       const result = json.filter((note) => note.id !== noteId);
 
-      // Respond to the DELETE request
-      res.json(`Item ${noteId} has been deleted 🗑️`);
-    });
-});
+//       // Save that array to the filesystem
+//       fs.writeFile('./db/db.json', result);
+
+//       // Respond to the DELETE request
+//       res.json(`Item ${noteId} has been deleted 🗑️`);
+//     });
+// });
 
 // POST Route for a new UX/UI tip
-notes.post('/', (req, res) => {
-  console.log(req.body);
+// notes.post('/', (req, res) => {
+//   console.log(req.body);
 
-  const { username, topic, notes } = req.body;
+//   const { username, topic, notes } = req.body;
 
-  if (req.body) {
-    const newNote = {
-      title,
-      text,
-      note_id: uuidv4(),
-    };
+//   if (req.body) {
+//     const newNote = {
+//       title,
+//       text,
+//       note_id: uuidv4(),
+//     };
 
-    readAndAppend(newTip, './db/notes.json');
-    res.json(`Note added successfully 🚀`);
-  } else {
-    res.error('Error in adding note');
-  }
-});
+//     readAndAppend(newTip, './db/notes.json');
+//     res.json(`Note added successfully 🚀`);
+//   } else {
+//     res.error('Error in adding note');
+//   }
+// });
 
-module.exports = notes;
+module.exports = notesRoute;
