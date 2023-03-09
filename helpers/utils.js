@@ -12,14 +12,14 @@ const writeToFile = (destination, content) =>
   );
 
 // fs.readAnd Append Function
-const readAndAppend = (content, file) => {
-  fs.readFile(file, 'utf8', (err, data) => {
+const readAndAppend = (destination, content) => {
+  fs.readFile(destination, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
     } else {
       const parsedData = JSON.parse(data);
       parsedData.push(content);
-      writeToFile(file, parsedData);
+      writeToFile(destination, parsedData);
     }
   });
 };
