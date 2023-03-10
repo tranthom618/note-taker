@@ -24,10 +24,12 @@ notes.post('/', (req, res) => {
 
   if (req.body) {
     const newNote = {
-      title,
-      text,
-      id: uuid(),
+      title: title,
+      text: text,
+      id: uuid()
+      // id: uuid()
     };
+    console.log(id);
 
     // Calls fs middleware
     readAndAppend('./db/db.json', newNote);
@@ -40,21 +42,12 @@ notes.post('/', (req, res) => {
 });
 
 // DELETE Route for a specific tip
-// notes.delete('/:id', (req, res) => {
-//   const noteId = req.params.id;
+notes.delete('/:id', (req, res) => {
+  const id = req.params.id;
+  deleteFromFile('./db/db.json', id);
 
-//   fs.read('./db/db.json')
-//     .then((data) => JSON.parse(data))
-//     .then((json) => {
-//       // Make a new array of all notes except the one with the ID provided in the URL
-//       const result = json.filter((note) => note.id !== noteId);
-
-//       // Save that array to the filesystem
-//       fs.writeFile('./db/db.json', result);
-
-//       // Respond to the DELETE request
-//       res.json(`Item ${noteId} has been deleted 🗑️`);
-//     });
-// });
+  // Respond to the DELETE request
+  res.json(`Item ${id} has been deleted 🗑️`);
+});
 
 module.exports = notes;

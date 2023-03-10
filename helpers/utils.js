@@ -2,6 +2,11 @@ const fs = require('fs');
 const util = require('util');
 const path = require ('path');
 
+// Function to generate unique id
+function uuid() {
+  return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+}
+
 // fs.readFile Function
 const readFromFile = util.promisify(fs.readFile);
 
@@ -24,14 +29,23 @@ const readAndAppend = (destination, content) => {
   });
 };
 
-// const deleteFromFile
+const deleteFromFile = (destination, idDelete) => {
+  fs.readFile(destination, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      const parsedData = JSON.parse(data);
 
-// Function to generate unique id
-const uuid = () => {
-  Math.floor((1 + Math.random()) * 0x10000)
-    .toString(16)
-    .substring(1);
-  }
+      // Linear search for loop
+      for (let i = 0; i < parsedData.length; i++) {
+        if (parsedData[i].id == idDelete ) {
+            parsedData.splice(i, 1);
+            console.log(parsedData);
+            writeToFile(destination, parsedData);
+          }
+        }
+      }
+    });
+  };
 
-
-module.exports = { readFromFile, writeToFile, readAndAppend, uuid };
+module.exports = { readFromFile, writeToFile, readAndAppend, deleteFromFile, uuid };
