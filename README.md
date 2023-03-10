@@ -6,7 +6,7 @@ The note-taker app has been an incredibly exploratory experience for understandi
 
 ## Installation
 
-For the purposes of this project, the web application will be hosted on Heroku (https://heroku///)
+For the purposes of this project, the web application will be hosted on Heroku (https://note-taker.herokuapp.com/)
 
 
 ## Usage
