@@ -1,8 +1,6 @@
 const notes = require('express').Router();
-// const fs = require('fs');
 const path = require('path');
-// const { v4: uuidv4 } = require('uuid');
-// const app = require('.');
+
 const {
   readFromFile,
   readAndAppend,
@@ -18,7 +16,6 @@ notes.get('/', (req, res) => {
 
 // POST Route for a new UX/UI note
 notes.post('/', (req, res) => {
-  console.log(req.body);
 
   const { title, text } = req.body;
 
@@ -27,9 +24,7 @@ notes.post('/', (req, res) => {
       title: title,
       text: text,
       id: uuid()
-      // id: uuid()
     };
-    console.log(id);
 
     // Calls fs middleware
     readAndAppend('./db/db.json', newNote);
