@@ -31,6 +31,7 @@ const readAndAppend = (destination, content) => {
   });
 };
 
+// Function to delete using fs.readFile, linear search, and writeToFile
 const deleteFromFile = (destination, idDelete) => {
   fs.readFile(destination, 'utf8', (err, data) => {
     if (err) {
@@ -50,4 +51,5 @@ const deleteFromFile = (destination, idDelete) => {
     });
   };
 
+// Exports
 module.exports = { readFromFile, writeToFile, readAndAppend, deleteFromFile, uuid };
